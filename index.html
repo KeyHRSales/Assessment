@@ -273,7 +273,7 @@ input.invalid,select.invalid,textarea.invalid{border-color:var(--red);background
   <p>Answer what you know. Skip what you do not. Nothing here is a commitment.</p>
   <div class="intro-meta">
     <div><strong>12 to 15 minutes</strong>Typical completion time</div>
-    <div><strong>12 sections</strong>Move freely between them</div>
+    <div><strong>13 sections</strong>Move freely between them</div>
     <div><strong>7 required fields</strong>Everything else is optional</div>
     <div><strong>Reviewed in 1 business day</strong>By a Key HR specialist</div>
   </div>
@@ -356,6 +356,13 @@ const SPEND_COLS = [
 ];
 
 const SECTIONS = [
+{ id:'intake', nav:'Start here', title:'Before we get started', blurb:'Two quick questions so your assessment reaches the right person on our team.',
+  fields:[
+    {id:'referralSource', label:'Please tell us how you heard of Key HR', type:'text'},
+    {id:'eventName', label:'Conference or event name', type:'text', half:true, help:'If applicable.'},
+    {id:'repName', label:'If you are currently working with a Key HR representative, please add their name here', type:'text', half:true, help:'Leave blank if not applicable.'}
+  ]},
+
 { id:'about', nav:'Company', title:'About you and your company', blurb:'The basics we need to route your assessment to the right specialist.',
   fields:[
     {id:'firstName', label:'First name', type:'text', half:true, required:true, autocomplete:'given-name'},
@@ -364,7 +371,6 @@ const SECTIONS = [
     {id:'jobTitle', label:'Job title', type:'text', half:true, autocomplete:'organization-title'},
     {id:'email', label:'Email address', type:'email', half:true, required:true, autocomplete:'email'},
     {id:'phone', label:'Phone number', type:'tel', half:true, required:true, autocomplete:'tel'},
-    {id:'website', label:'Company website', type:'text', half:true},
     {id:'hqLocation', label:'Headquarters city and state', type:'text', half:true},
     {id:'industry', label:'Industry', type:'text', half:true, help:'For example: construction, healthcare, professional services'},
     {id:'statesOperating', label:'States where you have employees', type:'text', half:true},
@@ -388,7 +394,6 @@ const SECTIONS = [
       options:['Yes, all four','Partially','No, a call center or shared queue','Not sure']},
     {id:'peoServiceSat', label:'How satisfied are you with the service from your current PEO?', type:'rating', showIf:{f:'usingPEO', is:'Yes'}},
     {id:'peoCostSat', label:'How satisfied are you with the cost of your current PEO?', type:'rating', showIf:{f:'usingPEO', is:'Yes'}},
-    {id:'peoChangeReason', label:'What would need to change for you to consider a different PEO?', type:'textarea', showIf:{f:'usingPEO', is:'Yes'}},
     {id:'noPeoReason', label:'Have you considered a PEO before? What has held you back?', type:'textarea', showIf:{f:'usingPEO', not:'Yes'}}
   ]},
 
@@ -557,7 +562,6 @@ const SECTIONS = [
     {id:'decisionMakers', label:'Who else is involved in this decision?', type:'text', half:true},
     {id:'contactPreference', label:'Preferred way to reach you', type:'select', half:true, options:['Email','Phone call','Text message','Video call']},
     {id:'bestTime', label:'Best day and time to connect', type:'text', half:true},
-    {id:'referralSource', label:'How did you hear about Key HR?', type:'text', half:true},
     {id:'additionalNotes', label:'Anything else we should know before we build your assessment?', type:'textarea'}
   ]},
 
@@ -701,7 +705,7 @@ function renderStep(){
   $('fields').innerHTML = s.fields.map(renderField).join('');
   $('backBtn').style.visibility = step===0 ? 'hidden' : 'visible';
   $('nextBtn').textContent = step===SECTIONS.length-1 ? 'Review answers' : 'Continue';
-  $('navNote').textContent = step===0 ? 'Fields marked with an asterisk are required.' : '';
+  $('navNote').textContent = s.fields.some(f=>f.required) ? 'Fields marked with an asterisk are required.' : '';
   wireInputs();
   applyConditionals();
   paintRail(); paintMeter();
