@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workforce Management Assessment | Key HR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B8322C;
+  --red-deep:#8F2620;
+  --red-tint:#FBEFEE;
+  --charcoal:#2D2D2D;
+  --cream:#FAF8F5;
+  --rule:#E3DED7;
+  --muted:#6E6862;
+  --white:#FFFFFF;
+  --green:#1F7A5C;
+  --radius:6px;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--cream);
+  color:var(--charcoal);
+  font-family:'Montserrat',Calibri,'Segoe UI',Helvetica,Arial,sans-serif;
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--red);}
+
+/* ---------- Header ---------- */
+.masthead{
+  background:var(--charcoal);
+  color:#fff;
+  border-bottom:4px solid var(--red);
+}
+.masthead-inner{
+  max-width:var(--maxw);margin:0 auto;padding:20px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand-mark{
+  font-weight:800;font-size:20px;letter-spacing:.14em;text-transform:uppercase;
+  border-left:4px solid var(--red);padding-left:12px;line-height:1.1;
+}
+.brand-mark small{display:block;font-size:9px;font-weight:600;letter-spacing:.22em;color:#B9B2AB;margin-top:3px;}
+.masthead-contact{font-size:12px;color:#B9B2AB;letter-spacing:.04em;text-align:right;}
+.masthead-contact strong{color:#fff;font-weight:600;display:block;}
+
+/* ---------- Intro ---------- */
+.intro{max-width:var(--maxw);margin:0 auto;padding:44px 28px 26px;}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red);
+  margin:0 0 12px;
+}
+.intro h1{
+  font-size:clamp(28px,4.4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.08;margin:0 0 14px;max-width:16ch;
+}
+.intro p{max-width:66ch;color:var(--muted);margin:0 0 8px;font-size:15.5px;}
+.intro-meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;padding-top:20px;border-top:1px solid var(--rule);}
+.intro-meta div{font-size:12px;color:var(--muted);letter-spacing:.03em;}
+.intro-meta strong{display:block;font-size:13px;color:var(--charcoal);font-weight:700;letter-spacing:0;}
+
+/* ---------- Layout ---------- */
+.shell{max-width:var(--maxw);margin:0 auto;padding:0 28px 80px;display:grid;grid-template-columns:250px 1fr;gap:40px;align-items:start;}
+
+/* ---------- Step rail ---------- */
+.rail{position:sticky;top:24px;}
+.rail-title{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;}
+.rail ol{list-style:none;margin:0;padding:0;}
+.rail li{position:relative;padding:0 0 0 34px;margin-bottom:2px;}
+.rail li::before{
+  content:"";position:absolute;left:9px;top:24px;bottom:-2px;width:1px;background:var(--rule);
+}
+.rail li:last-child::before{display:none;}
+.rail button{
+  all:unset;cursor:pointer;display:block;width:100%;padding:7px 6px 7px 0;
+  font-size:13px;font-weight:500;color:var(--muted);line-height:1.3;
+}
+.rail button:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
+.rail .num{
+  position:absolute;left:0;top:8px;width:19px;height:19px;border-radius:50%;
+  border:1px solid var(--rule);background:var(--cream);
+  font-size:10px;font-weight:700;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s ease;
+}
+.rail li.done .num{background:var(--charcoal);border-color:var(--charcoal);color:#fff;}
+.rail li.active .num{background:var(--red);border-color:var(--red);color:#fff;}
+.rail li.active button{color:var(--charcoal);font-weight:700;}
+.rail li.done button{color:var(--charcoal);}
+
+/* ---------- Card ---------- */
+.card{
+  background:var(--white);border:1px solid var(--rule);border-radius:var(--radius);
+  box-shadow:0 1px 2px rgba(45,45,45,.04);
+}
+.meter{height:3px;background:var(--rule);border-radius:var(--radius) var(--radius) 0 0;overflow:hidden;}
+.meter i{display:block;height:100%;width:0;background:var(--red);transition:width .35s ease;}
+.card-head{padding:30px 36px 22px;border-bottom:1px solid var(--rule);}
+.card-head .step-of{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:9px;}
+.card-head h2{margin:0 0 6px;font-size:24px;font-weight:800;letter-spacing:-.01em;}
+.card-head p{margin:0;color:var(--muted);font-size:13.5px;max-width:62ch;}
+.card-body{padding:30px 36px 34px;}
+
+/* ---------- Fields ---------- */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 24px;}
+.field{grid-column:span 2;}
+.field.half{grid-column:span 1;}
+.field.hidden{display:none;}
+.field > label,.legend{
+  display:block;font-size:13px;font-weight:700;line-height:1.4;margin-bottom:7px;color:var(--charcoal);
+}
+.req{color:var(--red);margin-left:2px;}
+.help{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:-3px;margin-bottom:8px;letter-spacing:.01em;}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{
+  width:100%;font-family:inherit;font-size:14.5px;color:var(--charcoal);
+  background:var(--white);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:11px 13px;transition:border-color .15s ease,box-shadow .15s ease;
+}
+textarea{min-height:86px;resize:vertical;line-height:1.5;}
+select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%236E6862' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px;cursor:pointer;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-tint);}
+input.invalid,select.invalid,textarea.invalid{border-color:var(--red);background:var(--red-tint);}
+.err{display:none;font-size:11.5px;font-weight:600;color:var(--red);margin-top:6px;}
+.err.show{display:block;}
+
+/* choice chips */
+.choices{display:flex;flex-wrap:wrap;gap:8px;}
+.choices.stack{flex-direction:column;align-items:stretch;}
+.chip{position:relative;}
+.chip input{position:absolute;opacity:0;width:0;height:0;}
+.chip span{
+  display:block;cursor:pointer;font-size:13.5px;font-weight:500;
+  border:1px solid var(--rule);border-radius:var(--radius);background:var(--white);
+  padding:9px 15px;transition:all .14s ease;
+}
+.chip input:checked + span{background:var(--charcoal);border-color:var(--charcoal);color:#fff;font-weight:600;}
+.chip input:focus-visible + span{outline:2px solid var(--red);outline-offset:2px;}
+.chip span:hover{border-color:var(--charcoal);}
+.chip input:checked + span:hover{border-color:var(--charcoal);}
+
+/* multi select grid */
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:8px;}
+.checks .chip span{padding:9px 14px;}
+.checks .chip input:checked + span{background:var(--red);border-color:var(--red);}
+
+/* rating scale */
+.scale{display:flex;gap:6px;align-items:stretch;}
+.scale .chip{flex:1;}
+.scale .chip span{text-align:center;padding:11px 4px;font-weight:700;font-size:14px;}
+.scale .chip input:checked + span{background:var(--red);border-color:var(--red);}
+.scale-ends{display:flex;justify-content:space-between;font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:7px;}
+
+/* ---------- Matrix tables ---------- */
+.matrix{border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;}
+.mhead{display:grid;gap:0;background:var(--charcoal);}
+.mhead div{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;
+  padding:10px 12px;
+}
+.mrow{display:grid;gap:0;border-top:1px solid var(--rule);align-items:stretch;}
+.mrow:nth-child(even){background:#FCFBF9;}
+.mrow > div{padding:9px 12px;display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.mlabel{font-size:13.5px;font-weight:600;line-height:1.35;}
+.mini{display:none;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.matrix input[type=text],.matrix select{padding:8px 10px;font-size:13.5px;}
+.matrix select{background-position:right 10px center;padding-right:30px;}
+.yn{display:flex;gap:5px;}
+.yn .chip{flex:1;}
+.yn .chip span{padding:8px 6px;text-align:center;font-size:12.5px;font-weight:600;}
+.yn .chip input:checked + span{background:var(--red);border-color:var(--red);}
+@media (max-width:760px){
+  .mhead{display:none;}
+  .mrow{grid-template-columns:1fr!important;border-top:3px solid var(--rule);padding:6px 0;}
+  .mrow > div{padding:6px 12px;}
+  .mini{display:block;}
+  .mlabel{font-size:14px;font-weight:700;color:var(--red);padding-top:4px;}
+}
+
+/* ---------- Nav ---------- */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px 36px;border-top:1px solid var(--rule);background:#FCFBF9;border-radius:0 0 var(--radius) var(--radius);flex-wrap:wrap;}
+.btn{
+  font-family:inherit;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:var(--radius);padding:13px 26px;cursor:pointer;border:1px solid transparent;transition:all .15s ease;
+}
+.btn:focus-visible{outline:2px solid var(--red);outline-offset:2px;}
+.btn-primary{background:var(--red);color:#fff;}
+.btn-primary:hover{background:var(--red-deep);}
+.btn-ghost{background:transparent;color:var(--muted);border-color:var(--rule);}
+.btn-ghost:hover{color:var(--charcoal);border-color:var(--charcoal);}
+.btn-dark{background:var(--charcoal);color:#fff;}
+.btn-dark:hover{background:#000;}
+.btn[disabled]{opacity:.5;cursor:not-allowed;}
+.nav-note{font-size:11.5px;color:var(--muted);}
+
+/* ---------- Review ---------- */
+.review-group{border-top:1px solid var(--rule);padding:18px 0 4px;}
+.review-group:first-child{border-top:none;padding-top:0;}
+.review-group h3{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin:0 0 12px;}
+.review-row{display:grid;grid-template-columns:minmax(200px,42%) 1fr;gap:14px;padding:7px 0;border-bottom:1px dotted var(--rule);font-size:13.5px;}
+.review-row:last-child{border-bottom:none;}
+.review-row .q{color:var(--muted);}
+.review-row .a{font-weight:600;white-space:pre-wrap;}
+.review-empty{color:var(--muted);font-size:13.5px;font-style:normal;}
+
+/* ---------- Status ---------- */
+.status{padding:44px 36px;text-align:center;display:none;}
+.status.show{display:block;}
+.status h2{font-size:26px;font-weight:800;margin:0 0 10px;}
+.status p{color:var(--muted);max-width:56ch;margin:0 auto 10px;}
+.status .actions{margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.restart-note{margin:32px auto 0!important;padding-top:24px;border-top:1px solid var(--rule);max-width:44ch;font-size:12.5px!important;}
+.tick{width:52px;height:52px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:26px;font-weight:700;}
+.tick.warn{background:var(--red);}
+.banner{display:none;margin:0 0 22px;padding:13px 16px;border-left:3px solid var(--red);background:var(--red-tint);font-size:13px;font-weight:600;border-radius:0 var(--radius) var(--radius) 0;}
+.banner.show{display:block;}
+
+/* ---------- Footer ---------- */
+.foot{max-width:var(--maxw);margin:0 auto;padding:0 28px 60px;font-size:11.5px;color:var(--muted);}
+.foot span{color:var(--red);font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:24px;padding:0 18px 60px;}
+  .rail{position:static;}
+  .rail ol{display:flex;overflow-x:auto;gap:4px;padding-bottom:6px;}
+  .rail li{padding:0;flex:0 0 auto;}
+  .rail li::before{display:none;}
+  .rail .num{position:static;margin:0 auto 4px;}
+  .rail button{text-align:center;font-size:10.5px;width:78px;padding:6px 2px;}
+  .intro{padding:32px 18px 22px;}
+  .card-head,.card-body,.nav{padding-left:20px;padding-right:20px;}
+  .grid{grid-template-columns:1fr;gap:20px;}
+  .field.half{grid-column:span 2;}
+  .review-row{grid-template-columns:1fr;gap:2px;}
+  .masthead-inner{padding:16px 18px;}
+  .foot{padding:0 18px 40px;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+@media print{
+  .rail,.nav,.masthead-contact,.intro-meta{display:none!important;}
+  body{background:#fff;}
+  .shell{display:block;padding:0;}
+  .card{border:none;box-shadow:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <div class="brand-mark">Key HR<small>Human Capital, Upgraded</small></div>
+    </div>
+    <div class="masthead-contact">
+      <strong>sales@keyhro.com</strong>
+      605 E. Robinson St., Suite 500, Orlando, FL
+    </div>
+  </div>
+</header>
+
+<section class="intro">
+  <p class="eyebrow">Workforce Management Assessment</p>
+  <h1>Tell us how your workforce runs today.</h1>
+  <p>This assessment gives our team the detail we need to build an accurate, apples to apples comparison for your organization: payroll, HR, leave, compliance, workers compensation, commercial coverage, benefits, ancillary services and technology, priced against what you have in place now.</p>
+  <p>Answer what you know. Skip what you do not. Nothing here is a commitment.</p>
+  <div class="intro-meta">
+    <div><strong>12 to 15 minutes</strong>Typical completion time</div>
+    <div><strong>12 sections</strong>Move freely between them</div>
+    <div><strong>7 required fields</strong>Everything else is optional</div>
+    <div><strong>Reviewed in 1 business day</strong>By a Key HR specialist</div>
+  </div>
+</section>
+
+<div class="shell">
+  <nav class="rail" aria-label="Assessment sections">
+    <p class="rail-title">Sections</p>
+    <ol id="rail"></ol>
+  </nav>
+
+  <main>
+    <form id="assessment" class="card" novalidate autocomplete="on">
+      <div class="meter"><i id="meterFill"></i></div>
+
+      <div id="formArea">
+        <div class="card-head">
+          <p class="step-of" id="stepOf"></p>
+          <h2 id="stepTitle"></h2>
+          <p id="stepBlurb"></p>
+        </div>
+        <div class="card-body">
+          <div class="banner" id="banner"></div>
+          <div class="grid" id="fields"></div>
+        </div>
+        <div class="nav">
+          <button type="button" class="btn btn-ghost" id="backBtn">Back</button>
+          <span class="nav-note" id="navNote"></span>
+          <button type="button" class="btn btn-primary" id="nextBtn">Continue</button>
+        </div>
+      </div>
+
+      <div class="status" id="status"></div>
+
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    </form>
+
+    <p class="foot"><span>Confidential</span> Information you share is used only to prepare your Key HR proposal. Questions before you finish? Call your Key HR representative or write to sales@keyhro.com.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURATION
+   ------------------------------------------------------------
+   RECIPIENT  Address that receives completed assessments.
+   ENDPOINT   Where the form posts. Default is FormSubmit, which
+              needs no account: the first submission triggers a
+              one time activation email to RECIPIENT. Click the
+              link in it and every submission after that arrives
+              automatically. Replace ENDPOINT with a HubSpot,
+              Zapier or custom URL at any time.
+   ============================================================ */
+const CONFIG = {
+  RECIPIENT: 'sales@keyhro.com',
+  ENDPOINT:  'https://formsubmit.co/ajax/sales@keyhro.com',
+  SUBJECT:   'Workforce Management Assessment'
+};
+
+const RATING_ENDS = ['Very dissatisfied','Very satisfied'];
+const CONF_ENDS   = ['Not confident','Very confident'];
+const OWNER_OPTS  = ['In-house staff','Our broker','Our PEO','The carrier','No one consistently','Not sure'];
+const FREQ_OPTS   = ['Per employee per month','Per check','Per transaction','Monthly','Quarterly','Annually','Percentage of payroll','Bundled into another fee','Not sure'];
+
+const COVERAGE_COLS = [
+  {key:'has', label:'In place', type:'yesno', w:'.85fr'},
+  {key:'carrier', label:'Carrier', type:'text', w:'1.1fr'},
+  {key:'premium', label:'Annual premium', type:'text', w:'.9fr'},
+  {key:'renewal', label:'Renewal', type:'text', w:'.8fr'}
+];
+const ANCILLARY_COLS = [
+  {key:'using', label:'Using today', type:'yesno', w:'.85fr'},
+  {key:'provider', label:'Provider', type:'text', w:'1.1fr'},
+  {key:'cost', label:'What you pay', type:'text', w:'.9fr'}
+];
+const SPEND_COLS = [
+  {key:'cost', label:'Amount', type:'text', w:'.9fr'},
+  {key:'freq', label:'Frequency', type:'select', options:FREQ_OPTS, w:'1.1fr'},
+  {key:'vendor', label:'Vendor or line item', type:'text', w:'1fr'}
+];
+
+const SECTIONS = [
+{ id:'about', nav:'Company', title:'About you and your company', blurb:'The basics we need to route your assessment to the right specialist.',
+  fields:[
+    {id:'firstName', label:'First name', type:'text', half:true, required:true, autocomplete:'given-name'},
+    {id:'lastName', label:'Last name', type:'text', half:true, required:true, autocomplete:'family-name'},
+    {id:'company', label:'Company name', type:'text', half:true, required:true, autocomplete:'organization'},
+    {id:'jobTitle', label:'Job title', type:'text', half:true, autocomplete:'organization-title'},
+    {id:'email', label:'Email address', type:'email', half:true, required:true, autocomplete:'email'},
+    {id:'phone', label:'Phone number', type:'tel', half:true, required:true, autocomplete:'tel'},
+    {id:'website', label:'Company website', type:'text', half:true},
+    {id:'hqLocation', label:'Headquarters city and state', type:'text', half:true},
+    {id:'industry', label:'Industry', type:'text', half:true, help:'For example: construction, healthcare, professional services'},
+    {id:'statesOperating', label:'States where you have employees', type:'text', half:true},
+    {id:'employees', label:'Total W-2 employees', type:'number', half:true, required:true},
+    {id:'worksites', label:'Number of worksite locations', type:'number', half:true},
+    {id:'opsDescription', label:'Description of operations', type:'textarea', required:true, help:'What the company does day to day, including the work your field or hourly staff perform.'},
+    {id:'workforceMix', label:'Workforce composition', type:'select', half:true, options:['Mostly full time','Mostly part time','An even mix','Heavily seasonal','Includes 1099 contractors']},
+    {id:'growth', label:'Expected headcount change over the next 12 months', type:'select', half:true, options:['Grow significantly','Grow moderately','Stay about the same','Decrease','Not sure']}
+  ]},
+
+{ id:'peo', nav:'Current PEO', title:'Your current PEO relationship', blurb:'If you are not on a PEO today, answer the first question and continue.',
+  fields:[
+    {id:'usingPEO', label:'Are you currently using a PEO for payroll and workforce management?', type:'radio', options:['Yes','No','Not sure']},
+    {id:'peoName', label:'PEO name', type:'text', half:true, showIf:{f:'usingPEO', is:'Yes'}},
+    {id:'peoRenewal', label:'When does your PEO agreement renew?', type:'text', half:true, showIf:{f:'usingPEO', is:'Yes'}, help:'Month and year is fine.'},
+    {id:'peoServices', label:'Which services are they providing?', type:'checks', showIf:{f:'usingPEO', is:'Yes'},
+      options:['Payroll and tax administration','Human resources support','Compliance','Workers compensation coverage','Risk management','Employee health benefits','Time and attendance','Recruiting and applicant tracking','Other']},
+    {id:'peoServicesOther', label:'Please list the other services', type:'text', showIf:{f:'peoServices', has:'Other'}},
+    {id:'peoDedicatedTeam', label:'Does your PEO provide a dedicated team?', type:'radio', showIf:{f:'usingPEO', is:'Yes'},
+      help:'A named payroll manager, HR manager, risk manager and benefits specialist.',
+      options:['Yes, all four','Partially','No, a call center or shared queue','Not sure']},
+    {id:'peoServiceSat', label:'How satisfied are you with the service from your current PEO?', type:'rating', showIf:{f:'usingPEO', is:'Yes'}},
+    {id:'peoCostSat', label:'How satisfied are you with the cost of your current PEO?', type:'rating', showIf:{f:'usingPEO', is:'Yes'}},
+    {id:'peoChangeReason', label:'What would need to change for you to consider a different PEO?', type:'textarea', showIf:{f:'usingPEO', is:'Yes'}},
+    {id:'noPeoReason', label:'Have you considered a PEO before? What has held you back?', type:'textarea', showIf:{f:'usingPEO', not:'Yes'}}
+  ]},
+
+{ id:'payroll', nav:'Payroll', title:'Payroll and tax', blurb:'How payroll gets processed today, and what gets in the way.',
+  fields:[
+    {id:'payrollProvider', label:'Current payroll provider', type:'text', half:true, help:'If your PEO runs payroll, enter the PEO name.'},
+    {id:'payrollSoftware', label:'If payroll is managed in-house, what software do you use?', type:'text', half:true},
+    {id:'payrollFrequency', label:'Payroll frequency', type:'select', half:true, options:['Weekly','Biweekly','Semi-monthly','Monthly','Multiple schedules']},
+    {id:'payrollTaxFiling', label:'Who files your payroll taxes?', type:'select', half:true, options:['Our provider','In-house','Our CPA','Not sure']},
+    {id:'payrollMultiState', label:'Do you file payroll taxes in more than one state?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'payrollCertified', label:'Do you require certified payroll or prevailing wage reporting?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'timeSystem', label:'What system do you use for time and attendance?', type:'text', half:true},
+    {id:'payrollErrors', label:'How often do payroll or tax errors occur?', type:'select', half:true, options:['Never','Rarely','Occasionally','Frequently','Every cycle']},
+    {id:'payrollServiceSat', label:'How satisfied are you with the service from your payroll provider?', type:'rating'},
+    {id:'payrollCostSat', label:'How satisfied are you with the cost of your payroll provider?', type:'rating'},
+    {id:'payrollChallenges', label:'What payroll challenges are you experiencing?', type:'textarea'},
+    {id:'payrollMissing', label:'What features or solutions does your provider not offer that you wish you had?', type:'textarea'}
+  ]},
+
+{ id:'risk', nav:'Workers Comp', title:'Workers compensation and risk', blurb:'Coverage, claims history and how safety is managed.',
+  fields:[
+    {id:'wcProvider', label:'Current workers compensation provider', type:'text', half:true},
+    {id:'wcRenewal', label:'Policy renewal date', type:'text', half:true, help:'Month and year is fine.'},
+    {id:'wcExpMod', label:'Experience modification rate, if known', type:'text', half:true},
+    {id:'wcClaims', label:'Claims filed in the last three years', type:'select', half:true, options:['None','1 to 2','3 to 5','More than 5','Not sure']},
+    {id:'wcServiceSat', label:'How satisfied are you with the service from your workers comp provider?', type:'rating'},
+    {id:'wcCostSat', label:'How satisfied are you with the cost of your workers comp coverage?', type:'rating'},
+    {id:'drivingExposure', label:'Do employees drive as part of their job duties?', type:'radio',
+      options:['No driving','Occasional local driving','Regular daily driving','Commercial fleet or CDL']},
+    {id:'heightExposure', label:'Do employees work at heights?', type:'radio',
+      options:['No','Under 6 feet','6 to 20 feet','Above 20 feet']},
+    {id:'safetyProgram', label:'Do you have a written safety program?', type:'radio', half:true, options:['Yes, current','Yes, but outdated','No','Not sure']},
+    {id:'oshaLogs', label:'Are OSHA logs maintained and current?', type:'radio', half:true, options:['Yes','No','Not required for us','Not sure']},
+    {id:'riskServices', label:'What risk management services does your current provider offer?', type:'textarea'},
+    {id:'riskInternal', label:'Who handles risk management internally?', type:'text', half:true},
+    {id:'riskExternal', label:'Do you use any external risk resources, team or software?', type:'text', half:true},
+    {id:'riskConfidence', label:'How confident are you that your risk and safety compliance is up to date?', type:'rating', ends:CONF_ENDS},
+    {id:'riskChallenges', label:'What risk management challenges do you face?', type:'textarea'}
+  ]},
+
+{ id:'coverage', nav:'Other coverage', title:'Other commercial coverage', blurb:'Everything outside of workers compensation. Fill in what you know and leave the rest blank.',
+  fields:[
+    {id:'coverageLines', label:'Which commercial lines do you carry, and with whom?', type:'matrix', cols:COVERAGE_COLS,
+      help:'Renewal month and year is enough. Premium can be an estimate.',
+      rows:['General liability','Professional liability or E&O','Employment practices liability (EPLI)','Commercial auto','Cyber liability','Umbrella or excess','Commercial property','Inland marine or equipment','Directors and officers','Other']},
+    {id:'coverageOther', label:'If you selected Other, what line is it?', type:'text', half:true},
+    {id:'coverageBroker', label:'Who is your commercial insurance broker or agent?', type:'text', half:true},
+    {id:'coverageConsolidated', label:'Are all of these lines placed through one broker?', type:'radio', half:true, options:['Yes, all with one broker','Split between two or more','Not sure']},
+    {id:'coverageRenewalCycle', label:'Do your policies renew on the same date?', type:'radio', half:true, options:['Yes, common renewal','Staggered dates','Not sure']},
+    {id:'coverageServiceSat', label:'How satisfied are you with the service from your commercial broker?', type:'rating'},
+    {id:'coverageCostSat', label:'How satisfied are you with the cost of your commercial coverage?', type:'rating'},
+    {id:'coverageClaims', label:'Claims filed on these lines in the last three years', type:'select', half:true, options:['None','1 to 2','3 to 5','More than 5','Not sure']},
+    {id:'epliClaims', label:'Have you had an employment claim, EEOC charge or wage complaint in the last three years?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'certificatesOwner', label:'Who handles certificates of insurance and vendor requirements?', type:'text', half:true},
+    {id:'coverageGaps', label:'Do you have any concerns about gaps in your current coverage?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'coverageReview', label:'Would you like Key HR to review these lines as part of your assessment?', type:'radio', options:['Yes, review everything','Review select lines only','No, workers comp only']},
+    {id:'coverageNotes', label:'Anything else we should know about your commercial coverage?', type:'textarea'}
+  ]},
+
+{ id:'hr', nav:'HR', title:'HR, compliance and hiring', blurb:'Who carries the HR load today and where it is stretched.',
+  fields:[
+    {id:'hrInternal', label:'Who handles HR and compliance internally?', type:'text', half:true, help:'Name and title, or "no dedicated HR".'},
+    {id:'hrExternal', label:'Do you have external HR resources, team or software?', type:'text', half:true},
+    {id:'handbook', label:'Employee handbook status', type:'radio', options:['Updated within the last 12 months','Older than 12 months','We do not have one','Not sure']},
+    {id:'performanceTools', label:'Performance management tools in use', type:'text', half:true},
+    {id:'lmsTools', label:'Learning management tools in use', type:'text', half:true},
+    {id:'complianceConfidence', label:'How confident are you that you are fully compliant with federal, state and local mandates?', type:'rating', ends:CONF_ENDS},
+    {id:'hrSupportNeeds', label:'Where would HR support help most?', type:'checks',
+      options:['Handbook and policy','Job descriptions','I-9 and E-Verify','Leave and FMLA administration','Unemployment claims','Background screening','Employee relations and terminations','Terminations and documentation','Training and development','Compensation planning','Performance reviews','Wage and hour classification']},
+    {id:'leaveOwner', label:'Who administers leave requests, eligibility and return to work?', type:'text', half:true},
+    {id:'leaveAdmin', label:'Do you use a third party leave administrator or software?', type:'text', half:true, help:'Enter the name, or "none".'},
+    {id:'leaveTypes', label:'Which leave programs do you administer?', type:'checks',
+      options:['FMLA','State paid family and medical leave','State mandated sick leave','ADA accommodations','Parental leave','Military and USERRA','Personal leave of absence','Workers comp related leave','Bereavement','Jury duty','PTO and vacation','Not sure']},
+    {id:'fmlaSubject', label:'Are you subject to FMLA?', type:'radio', half:true, help:'Generally 50 or more employees within 75 miles.', options:['Yes','No','Not sure']},
+    {id:'leaveStates', label:'Do you have employees in states with mandated paid leave?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'leaveTracking', label:'How do you track leave requests and PTO balances?', type:'select', half:true, options:['In our HR or payroll system','Dedicated leave software','Spreadsheets','Paper forms or email','Third party administrator','We do not track this formally','Not sure']},
+    {id:'leavePolicies', label:'Do you have written leave policies and request forms?', type:'radio', half:true, options:['Yes, current','Yes, but outdated','No','Not sure']},
+    {id:'leaveVolume', label:'About how many leave requests do you process per year?', type:'select', half:true, options:['None','1 to 5','6 to 15','16 to 40','More than 40','Not sure']},
+    {id:'leaveIntermittent', label:'Do you manage intermittent or reduced schedule leave?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'leaveConfidence', label:'How confident are you in your leave eligibility tracking and documentation?', type:'rating', ends:CONF_ENDS},
+    {id:'leaveChallenges', label:'What leave management challenges are you experiencing?', type:'textarea', help:'Coverage gaps, notice and certification, coordination with payroll, return to work, disputes.'},
+    {id:'employeeRelations', label:'How would you rate your employee relations?', type:'radio', options:['Excellent','Good','Fair','Needs improvement','Poor']},
+    {id:'turnover', label:'What turnover are you experiencing, and what do you attribute it to?', type:'textarea'},
+    {id:'hiringFrequency', label:'How many people do you hire per year?', type:'select', half:true, options:['0 to 5','6 to 15','16 to 50','51 to 100','More than 100']},
+    {id:'recruitingOwner', label:'Who manages hiring and recruiting?', type:'text', half:true},
+    {id:'recruitingSupport', label:'Do you need support with hiring and recruiting?', type:'radio', half:true, options:['Yes','No','Maybe']},
+    {id:'onboardingExperience', label:'How would you describe the new hire onboarding experience?', type:'radio', half:true, options:['Excellent','Good','Fair','Needs improvement','Poor']},
+    {id:'onboardingOwner', label:'Who handles new hire onboarding, and what makes it difficult?', type:'textarea'}
+  ]},
+
+{ id:'benefits', nav:'Benefits', title:'Employee benefits', blurb:'What you offer, who administers it and what it costs.',
+  fields:[
+    {id:'offersBenefits', label:'Do you currently offer employee health benefits?', type:'radio', options:['Yes','No','Only to some employees']},
+    {id:'noBenefitsReason', label:'What has kept you from offering benefits?', type:'textarea', showIf:{f:'offersBenefits', is:'No'}},
+    {id:'benefitsProvider', label:'Who provides your benefits, broker or PEO?', type:'text', half:true, showIf:{f:'offersBenefits', not:'No'}},
+    {id:'medicalCarriers', label:'Major medical carriers you use', type:'text', half:true, showIf:{f:'offersBenefits', not:'No'}},
+    {id:'benefitsRenewal', label:'Benefits renewal date', type:'text', half:true, showIf:{f:'offersBenefits', not:'No'}},
+    {id:'employerContribution', label:'Employer contribution toward employee-only premium', type:'text', half:true, showIf:{f:'offersBenefits', not:'No'}, help:'Percentage or dollar amount.'},
+    {id:'participation', label:'Approximate participation rate', type:'text', half:true, showIf:{f:'offersBenefits', not:'No'}},
+    {id:'retirementProvider', label:'Retirement plan provider', type:'text', half:true},
+    {id:'ancillary', label:'Which additional lines do you offer today?', type:'checks',
+      options:['Dental','Vision','Life','Short term disability','Long term disability','401k or retirement','Supplemental and voluntary','Employee assistance program','Telehealth','Wellness program','None of these']},
+    {id:'benefitsServiceSat', label:'How satisfied are you with the service from your benefits provider?', type:'rating'},
+    {id:'benefitsCostSat', label:'How satisfied are you with the cost of your benefits?', type:'rating'},
+    {id:'ownEnrollments', label:'Who manages new enrollments?', type:'select', half:true, options:OWNER_OPTS},
+    {id:'ownPolicy', label:'Who handles policy maintenance?', type:'select', half:true, options:OWNER_OPTS},
+    {id:'ownDeductions', label:'Who handles calculations and deductions?', type:'select', half:true, options:OWNER_OPTS},
+    {id:'ownEducation', label:'Who handles employee benefits education?', type:'select', half:true, options:OWNER_OPTS},
+    {id:'ownOpenEnrollment', label:'Who handles open enrollment?', type:'select', half:true, options:OWNER_OPTS},
+    {id:'ownACA', label:'Who handles ACA reporting?', type:'select', half:true, options:OWNER_OPTS},
+    {id:'benefitsChallenges', label:'What benefits related challenges are you experiencing?', type:'textarea'}
+  ]},
+
+{ id:'ancillarysvc', nav:'Ancillary', title:'Ancillary solutions', blurb:'The supporting services around payroll and HR. Mark what you use, who provides it and what it costs.',
+  fields:[
+    {id:'ancillaryUse', label:'Which of these are you using today?', type:'matrix', cols:ANCILLARY_COLS,
+      help:'Cost can be a per employee, per transaction or monthly figure. An estimate is fine.',
+      rows:['Applicant tracking system','Timekeeping and time and labor management','Background checks','Drug screening','E-Verify','Early wage advance','Call center support','Accounting and tax management','Virtual assistants','Digital marketing services']},
+    {id:'ancillaryOther', label:'Are you using any other outside services we did not list?', type:'text'},
+    {id:'ancillaryContracts', label:'Are any of these under contract with a term commitment?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'ancillaryIntegrated', label:'Do these tools integrate with your payroll platform?', type:'radio', half:true, options:['Yes, most of them','Some do','No, they are separate','Not sure']},
+    {id:'ancillaryInterest', label:'Which of these would you like Key HR to include in your proposal?', type:'checks',
+      help:'Select anything you want priced, whether or not you use it today.',
+      options:['Applicant tracking system','Timekeeping and time and labor management','Background checks','Drug screening','E-Verify','Early wage advance','Call center support','Accounting and tax management','Virtual assistants','Digital marketing services','None at this time']},
+    {id:'ancillaryPriority', label:'Which one would make the biggest difference right now, and why?', type:'textarea'}
+  ]},
+
+{ id:'tech', nav:'Technology', title:'Technology and reporting', blurb:'The systems your team and your employees log into.',
+  fields:[
+    {id:'hcmPlatform', label:'What HCM or payroll platform are you using?', type:'text', half:true},
+    {id:'systemsCount', label:'How many separate systems manage payroll, HR, time, benefits and hiring?', type:'select', half:true, options:['One integrated system','Two','Three','Four or more','Not sure']},
+    {id:'systemsList', label:'List the systems you use', type:'text'},
+    {id:'hcmSat', label:'How satisfied are you with your current platform?', type:'rating'},
+    {id:'employeePortal', label:'Do employees have access to a self-service portal?', type:'radio', half:true, options:['Yes','Limited','No','Not sure']},
+    {id:'mobileAccess', label:'Is there a mobile app for employees?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'reportAccess', label:'Do you have easy access to all the reports you require?', type:'radio', half:true, options:['Yes','Somewhat','No','Not sure']},
+    {id:'customReports', label:'Do you have a custom report builder?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'integrationsWanted', label:'What integrations or features would you like your platform to have?', type:'textarea', help:'Accounting, ERP, scheduling, retirement, background screening and anything else.'}
+  ]},
+
+{ id:'cost', nav:'Cost and time', title:'What you pay and what it costs your team', blurb:'Estimates are fine. This section drives the side by side comparison.',
+  fields:[
+    {id:'costPEO', label:'PEO administrative fee', type:'text', half:true, help:'Percentage of payroll or per employee per month.'},
+    {id:'costPayroll', label:'Payroll cost', type:'text', half:true, help:'Per check, per month, or admin fee rate.'},
+    {id:'costHR', label:'HR services cost', type:'text', half:true},
+    {id:'costCompliance', label:'Compliance cost', type:'text', half:true},
+    {id:'costWC', label:'Workers compensation cost', type:'text', half:true, help:'Rate per 100 of payroll or annual premium.'},
+    {id:'costRisk', label:'Additional risk management cost', type:'text', half:true},
+    {id:'costBenefitsAdmin', label:'Benefits administration cost', type:'text', half:true},
+    {id:'costOther', label:'Other workforce management costs', type:'text', half:true},
+    {id:'timePayroll', label:'Hours per week your team spends managing payroll', type:'select', half:true, options:['Less than 2','2 to 5','6 to 10','11 to 20','More than 20']},
+    {id:'timeOnboarding', label:'Hours spent onboarding each new hire', type:'select', half:true, options:['Less than 1','1 to 3','4 to 8','More than 8']},
+    {id:'mgmtFrustration', label:'What is the biggest frustration your management team faces?', type:'textarea'},
+    {id:'employeeFrustration', label:'What is the biggest frustration your employees face?', type:'textarea'}
+  ]},
+
+{ id:'goals', nav:'Priorities', title:'Priorities and next steps', blurb:'Last section. Tell us what a win looks like.',
+  fields:[
+    {id:'improveAreas', label:'What are you hoping to improve?', type:'checks',
+      options:['Payroll accuracy','Tax compliance','Workers comp cost','Risk and safety','HR support','Regulatory compliance','Benefits offering','Benefits cost','Recruiting','Onboarding','Employee retention','Technology and reporting','Time and attendance','Customer service','Overall cost']},
+    {id:'triggerEvent', label:'What prompted this review?', type:'checks',
+      options:['Upcoming benefits renewal','Upcoming workers comp renewal','Service problems','Payroll or tax errors','Rate increase','Compliance concern','Growth or expansion','Contract ending','General cost review','Other']},
+    {id:'valueAdded', label:'What value added solutions do you wish you had?', type:'textarea'},
+    {id:'timeline', label:'When are you looking to make a change?', type:'radio',
+      options:['Immediately','Within 30 days','1 to 3 months','3 to 6 months','6 to 12 months','Gathering information only']},
+    {id:'decisionMakers', label:'Who else is involved in this decision?', type:'text', half:true},
+    {id:'contactPreference', label:'Preferred way to reach you', type:'select', half:true, options:['Email','Phone call','Text message','Video call']},
+    {id:'bestTime', label:'Best day and time to connect', type:'text', half:true},
+    {id:'referralSource', label:'How did you hear about Key HR?', type:'text', half:true},
+    {id:'additionalNotes', label:'Anything else we should know before we build your assessment?', type:'textarea'}
+  ]},
+
+{ id:'financial', nav:'Financial analysis', title:'Financial analysis and cost comparison', blurb:'To build a true side by side comparison we need your current numbers. Tell us what you can share, then fill in whatever costs you already know.',
+  fields:[
+    {id:'docsAvailable', label:'Which documents can you provide?', type:'checks',
+      help:'Nothing here is required to continue. Check what you have and we will tell you where to send it.',
+      options:['Current PEO or payroll invoice','Payroll register or summary, most recent quarter','Workers compensation policy declarations page','Workers compensation loss runs, 3 to 5 years','Medical invoices','Ancillary and voluntary benefit invoices','Benefit plan summaries and rate sheets','Employee census with wages and class codes','HR or compliance service invoices','Risk management or safety service invoices','Software and platform invoices','Commercial insurance declarations pages','SUTA rate notice for each state','Most recent 941 or state quarterly filings','Retirement plan fee disclosure','Employee handbook','Organizational chart','None of these right now']},
+    {id:'docsDelivery', label:'How would you like to send them?', type:'radio',
+      options:['Email to sales@keyhro.com','Secure upload link, please send me one','Give them to my Key HR representative','I would rather discuss first']},
+    {id:'docsContact', label:'Who should we contact for documents?', type:'text', half:true, help:'Name, title and email if it is someone other than you.'},
+    {id:'docsTimeline', label:'When could you have these together?', type:'select', half:true, options:['Already attached or sent','Within a few days','Within a week','Within two weeks','Not sure yet']},
+
+    {id:'spendLines', label:'What are you paying today?', type:'matrix', cols:SPEND_COLS,
+      help:'Fill in only the lines that apply. Estimates are fine and blanks are expected.',
+      rows:['PEO administrative fee','Payroll processing','Payroll tax filing and reporting','Time and labor management','HRIS or HR management software','HR advisory or outsourced HR','Compliance services','Risk management and safety','Workers compensation premium','Other commercial insurance','Benefits administration','Medical premium, employer share','Ancillary and voluntary benefits','Leave management','Performance management','Learning management','Applicant tracking','Background checks','Drug screening','E-Verify','Early wage advance','Call center or help desk support','Accounting and tax services','Virtual assistants','Digital marketing services','Retirement plan administration','Employee assistance program','Other']},
+    {id:'spendOther', label:'If you listed Other above, what is it?', type:'text', half:true},
+    {id:'spendTotal', label:'Estimated total annual spend across all of the above', type:'text', half:true},
+    {id:'annualPayroll', label:'Approximate annual gross payroll', type:'text', half:true},
+    {id:'sutaRate', label:'Current SUTA rate', type:'text', half:true, help:'List each state if you have more than one.'},
+    {id:'fiscalYearEnd', label:'Fiscal year end', type:'text', half:true},
+    {id:'budgetCycle', label:'When do you set next year budget?', type:'text', half:true},
+    {id:'hiddenCosts', label:'Are there internal costs we should count?', type:'checks',
+      help:'Staff time and workarounds are part of what your current setup really costs.',
+      options:['Staff hours on payroll','Staff hours on HR and compliance','Staff hours on benefits administration','Staff hours on leave tracking','Outside counsel or consultants','CPA or bookkeeping support','Penalties or amended filings','Overtime or temp coverage','None that we can identify']},
+    {id:'penalties', label:'Have you paid any tax penalties, fines or settlements in the last 24 months?', type:'radio', half:true, options:['Yes','No','Not sure']},
+    {id:'penaltiesDetail', label:'Please describe', type:'text', half:true, showIf:{f:'penalties', is:'Yes'}},
+    {id:'analysisRecipients', label:'Who should receive the completed analysis?', type:'text', help:'Names and email addresses.'},
+    {id:'financialNotes', label:'Anything else that affects the numbers?', type:'textarea', help:'Pending renewals, acquisitions, layoffs, new locations, rate increases you already know about.'}
+  ]}
+];
+
+/* ---------------- state ---------------- */
+const answers = {};
+let step = 0;
+const TOTAL = SECTIONS.length + 1; // + review step
+const $ = id => document.getElementById(id);
+
+/* ---------------- rail ---------------- */
+function buildRail(){
+  $('rail').innerHTML = SECTIONS.map((s,i)=>
+    `<li data-i="${i}"><span class="num">${i+1}</span><button type="button">${s.nav}</button></li>`
+  ).join('') + `<li data-i="${SECTIONS.length}"><span class="num">${SECTIONS.length+1}</span><button type="button">Review</button></li>`;
+  $('rail').querySelectorAll('li').forEach(li=>{
+    li.querySelector('button').addEventListener('click',()=>{
+      const target = +li.dataset.i;
+      if(target > step){ if(!validate()) return; }
+      go(target);
+    });
+  });
+}
+function paintRail(){
+  $('rail').querySelectorAll('li').forEach(li=>{
+    const i = +li.dataset.i;
+    li.classList.toggle('active', i===step);
+    li.classList.toggle('done', i<step);
+  });
+}
+
+/* ---------------- field rendering ---------------- */
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderField(f){
+  const help = f.help ? `<span class="help">${esc(f.help)}</span>` : '';
+  const star = f.required ? '<span class="req" aria-hidden="true">*</span>' : '';
+  const ac = f.autocomplete ? ` autocomplete="${f.autocomplete}"` : '';
+  const v = answers[f.id];
+  let control = '';
+
+  if(f.type==='textarea'){
+    control = `<textarea id="${f.id}" name="${f.id}" rows="3">${v?esc(v):''}</textarea>`;
+  } else if(f.type==='select'){
+    control = `<select id="${f.id}" name="${f.id}"><option value="">Select one</option>` +
+      f.options.map(o=>`<option${v===o?' selected':''}>${esc(o)}</option>`).join('') + `</select>`;
+  } else if(f.type==='radio'){
+    control = `<div class="choices" role="radiogroup" aria-labelledby="lbl-${f.id}">` +
+      f.options.map((o,i)=>`<label class="chip"><input type="radio" name="${f.id}" value="${esc(o)}"${v===o?' checked':''}><span>${esc(o)}</span></label>`).join('') +
+      `</div>`;
+  } else if(f.type==='checks'){
+    const arr = Array.isArray(v)?v:[];
+    control = `<div class="checks">` +
+      f.options.map(o=>`<label class="chip"><input type="checkbox" name="${f.id}" value="${esc(o)}"${arr.includes(o)?' checked':''}><span>${esc(o)}</span></label>`).join('') +
+      `</div>`;
+  } else if(f.type==='matrix'){
+    const cols = f.cols;
+    const tpl = `minmax(150px,1.5fr) ` + cols.map(c=>c.w||'1fr').join(' ');
+    const store = (v && typeof v==='object') ? v : {};
+    let html = `<div class="matrix"><div class="mhead" style="grid-template-columns:${tpl}"><div>Service</div>` +
+      cols.map(c=>`<div>${esc(c.label)}</div>`).join('') + `</div>`;
+    f.rows.forEach((row,ri)=>{
+      const rv = store[row] || {};
+      html += `<div class="mrow" style="grid-template-columns:${tpl}"><div><span class="mlabel">${esc(row)}</span></div>`;
+      cols.forEach(c=>{
+        const cur = rv[c.key] || '';
+        const nm = `${f.id}__${ri}__${c.key}`;
+        let ctl = '';
+        if(c.type==='yesno'){
+          ctl = `<div class="yn">` + ['Yes','No'].map(o=>
+            `<label class="chip"><input type="radio" name="${nm}" value="${o}" data-mx="${f.id}" data-row="${esc(row)}" data-key="${c.key}"${cur===o?' checked':''}><span>${o}</span></label>`).join('') + `</div>`;
+        } else if(c.type==='select'){
+          ctl = `<select name="${nm}" data-mx="${f.id}" data-row="${esc(row)}" data-key="${c.key}"><option value="">Select</option>` +
+            c.options.map(o=>`<option${cur===o?' selected':''}>${esc(o)}</option>`).join('') + `</select>`;
+        } else {
+          ctl = `<input type="text" name="${nm}" value="${esc(cur)}" data-mx="${f.id}" data-row="${esc(row)}" data-key="${c.key}">`;
+        }
+        html += `<div><span class="mini">${esc(c.label)}</span>${ctl}</div>`;
+      });
+      html += `</div>`;
+    });
+    control = html + `</div>`;
+  } else if(f.type==='rating'){
+    const ends = f.ends || RATING_ENDS;
+    control = `<div class="scale" role="radiogroup" aria-labelledby="lbl-${f.id}">` +
+      [1,2,3,4,5].map(n=>`<label class="chip"><input type="radio" name="${f.id}" value="${n}"${v==String(n)?' checked':''}><span>${n}</span></label>`).join('') +
+      `</div><div class="scale-ends"><span>${esc(ends[0])}</span><span>${esc(ends[1])}</span></div>`;
+  } else {
+    control = `<input type="${f.type}" id="${f.id}" name="${f.id}" value="${v?esc(v):''}"${ac}>`;
+  }
+
+  const labelTag = (f.type==='radio'||f.type==='checks'||f.type==='rating'||f.type==='matrix')
+    ? `<span class="legend" id="lbl-${f.id}">${esc(f.label)}${star}</span>`
+    : `<label for="${f.id}">${esc(f.label)}${star}</label>`;
+
+  return `<div class="field${f.half?' half':''}" data-field="${f.id}">
+    ${labelTag}${help}${control}
+    <div class="err" id="err-${f.id}">This field is required.</div>
+  </div>`;
+}
+
+function renderStep(){
+  $('status').classList.remove('show');
+  $('formArea').style.display='';
+  $('banner').classList.remove('show');
+
+  if(step === SECTIONS.length){ renderReview(); paintRail(); paintMeter(); return; }
+
+  const s = SECTIONS[step];
+  $('stepOf').textContent = `Section ${step+1} of ${SECTIONS.length}`;
+  $('stepTitle').textContent = s.title;
+  $('stepBlurb').textContent = s.blurb;
+  $('fields').innerHTML = s.fields.map(renderField).join('');
+  $('backBtn').style.visibility = step===0 ? 'hidden' : 'visible';
+  $('nextBtn').textContent = step===SECTIONS.length-1 ? 'Review answers' : 'Continue';
+  $('navNote').textContent = step===0 ? 'Fields marked with an asterisk are required.' : '';
+  wireInputs();
+  applyConditionals();
+  paintRail(); paintMeter();
+  window.scrollTo({top:0, behavior:'smooth'});
+  const first = $('fields').querySelector('input,select,textarea');
+  if(first && window.innerWidth>900) first.focus({preventScroll:true});
+}
+
+function paintMeter(){ $('meterFill').style.width = ((step)/(TOTAL-1)*100).toFixed(1)+'%'; }
+
+/* ---------------- input wiring ---------------- */
+function wireInputs(){
+  $('fields').querySelectorAll('input,select,textarea').forEach(el=>{
+    const ev = (el.type==='radio'||el.type==='checkbox'||el.tagName==='SELECT') ? 'change' : 'input';
+    el.addEventListener(ev, ()=>{
+      const name = el.name;
+      if(el.dataset.mx){
+        const fid = el.dataset.mx;
+        if(!answers[fid] || typeof answers[fid]!=='object' || Array.isArray(answers[fid])) answers[fid] = {};
+        const row = el.dataset.row;
+        if(!answers[fid][row]) answers[fid][row] = {};
+        if(el.value === '') delete answers[fid][row][el.dataset.key];
+        else answers[fid][row][el.dataset.key] = el.value;
+        if(!Object.keys(answers[fid][row]).length) delete answers[fid][row];
+        applyConditionals();
+        return;
+      }
+      if(el.type==='checkbox'){
+        answers[name] = Array.from($('fields').querySelectorAll(`input[name="${name}"]:checked`)).map(x=>x.value);
+      } else {
+        answers[name] = el.value;
+      }
+      el.classList.remove('invalid');
+      const e = $('err-'+name); if(e) e.classList.remove('show');
+      applyConditionals();
+    });
+  });
+}
+
+function applyConditionals(){
+  const s = SECTIONS[step]; if(!s) return;
+  s.fields.forEach(f=>{
+    if(!f.showIf) return;
+    const wrap = $('fields').querySelector(`[data-field="${f.id}"]`); if(!wrap) return;
+    const c = f.showIf, val = answers[c.f];
+    let show = false;
+    if(c.has) show = Array.isArray(val) && val.includes(c.has);
+    else if(c.is) show = val === c.is;
+    else if(c.not) show = !!val && val !== c.not;
+    wrap.classList.toggle('hidden', !show);
+    if(!show){ delete answers[f.id]; }
+  });
+}
+
+/* ---------------- validation ---------------- */
+function validate(){
+  const s = SECTIONS[step]; if(!s) return true;
+  let ok = true, firstBad = null;
+  s.fields.forEach(f=>{
+    if(!f.required) return;
+    const wrap = $('fields').querySelector(`[data-field="${f.id}"]`);
+    if(!wrap || wrap.classList.contains('hidden')) return;
+    const val = answers[f.id];
+    let bad = !val || (Array.isArray(val) && !val.length) || String(val).trim()==='';
+    if(!bad && f.type==='email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)){
+      bad = true; $('err-'+f.id).textContent = 'Enter a valid email address.';
+    }
+    if(bad){
+      ok = false;
+      const ctl = wrap.querySelector('input,select,textarea');
+      if(ctl) ctl.classList.add('invalid');
+      $('err-'+f.id).classList.add('show');
+      if(!firstBad) firstBad = wrap;
+    }
+  });
+  if(!ok){
+    $('banner').textContent = 'A few required fields still need an answer.';
+    $('banner').classList.add('show');
+    if(firstBad) firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  return ok;
+}
+
+/* ---------------- review ---------------- */
+function fmt(v){ return Array.isArray(v) ? v.join(', ') : v; }
+
+function collect(){
+  const out = [];
+  SECTIONS.forEach(s=>{
+    const rows = [];
+    s.fields.forEach(f=>{
+      const v = answers[f.id];
+      if(v===undefined || v===null || v==='' || (Array.isArray(v) && !v.length)) return;
+      if(f.type==='matrix'){
+        const keys = Object.keys(v).filter(k=>Object.keys(v[k]||{}).length);
+        if(!keys.length) return;
+        f.rows.forEach(row=>{
+          if(!keys.includes(row)) return;
+          const parts = f.cols.filter(c=>v[row][c.key]).map(c=>`${c.label}: ${v[row][c.key]}`);
+          if(parts.length) rows.push({q:row, a:parts.join('  |  ')});
+        });
+        return;
+      }
+      let display = fmt(v);
+      if(f.type==='rating') display = display + ' of 5';
+      rows.push({q:f.label, a:display});
+    });
+    if(rows.length) out.push({section:s.title, rows});
+  });
+  return out;
+}
+
+function renderReview(){
+  $('stepOf').textContent = 'Final step';
+  $('stepTitle').textContent = 'Review and send';
+  $('stepBlurb').textContent = 'Check anything you want to change, then send it to our team.';
+  const data = collect();
+  $('fields').innerHTML = `<div class="field">` + (data.length
+    ? data.map((g,gi)=>`<div class="review-group"><h3>${esc(g.section)}</h3>` +
+        g.rows.map(r=>`<div class="review-row"><div class="q">${esc(r.q)}</div><div class="a">${esc(r.a)}</div></div>`).join('') +
+        `</div>`).join('')
+    : `<p class="review-empty">No answers recorded yet. Use Back to complete the sections.</p>`) + `</div>`;
+  $('backBtn').style.visibility='visible';
+  $('nextBtn').textContent = 'Send to Key HR';
+  $('navNote').textContent = 'Goes to ' + CONFIG.RECIPIENT;
+}
+
+/* ---------------- plain text copy ---------------- */
+function asText(){
+  const lines = [];
+  lines.push('KEY HR WORKFORCE MANAGEMENT ASSESSMENT');
+  lines.push('Submitted ' + new Date().toLocaleString());
+  lines.push('');
+  collect().forEach(g=>{
+    lines.push(g.section.toUpperCase());
+    lines.push('-'.repeat(g.section.length));
+    g.rows.forEach(r=> lines.push(r.q + ': ' + r.a));
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+
+function downloadCopy(){
+  const blob = new Blob([asText()], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const co = (answers.company||'assessment').replace(/[^a-z0-9]+/gi,'_');
+  a.download = `KeyHR_Assessment_${co}.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+}
+
+function mailtoLink(){
+  const subj = `${CONFIG.SUBJECT} - ${answers.company||'New prospect'}`;
+  const body = asText().slice(0,1800) + '\n\n(If this message was shortened, the full copy is attached or available on request.)';
+  return `mailto:${CONFIG.RECIPIENT}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+}
+
+/* ---------------- submit ---------------- */
+async function submitForm(){
+  const btn = $('nextBtn');
+  btn.disabled = true; btn.textContent = 'Sending';
+
+  const payload = {
+    _subject: `${CONFIG.SUBJECT} - ${answers.company||'New prospect'}`,
+    _template: 'table',
+    _captcha: 'false',
+    'Submitted': new Date().toLocaleString(),
+    'Summary': asText()
+  };
+  collect().forEach(g=>{ g.rows.forEach(r=>{ payload[g.section + ' | ' + r.q] = r.a; }); });
+
+  try{
+    const res = await fetch(CONFIG.ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error('status ' + res.status);
+    showStatus(true);
+  }catch(err){
+    showStatus(false);
+  }
+}
+
+function showStatus(sent){
+  $('formArea').style.display='none';
+  const el = $('status');
+  el.classList.add('show');
+  step = TOTAL-1; paintMeter();
+  if(sent){
+    el.innerHTML = `
+      <div class="tick">&#10003;</div>
+      <h2>Assessment sent</h2>
+      <p>Thank you, ${esc(answers.firstName||'')}. Your assessment is with our team and a Key HR specialist will follow up within one business day.</p>
+      <p>To start the financial analysis, email your invoices and documents to <a href="mailto:${CONFIG.RECIPIENT}?subject=${encodeURIComponent('Documents - ' + (answers.company||''))}">${CONFIG.RECIPIENT}</a> with your company name in the subject line. Ask us for a secure upload link if you would prefer one.</p>
+      <p>Keep a copy for your records if you would like one.</p>
+      <div class="actions">
+        <button type="button" class="btn btn-dark" id="dlBtn">Download a copy</button>
+        <button type="button" class="btn btn-ghost" id="printBtn">Print or save as PDF</button>
+      </div>
+      <p class="restart-note">Sharing this device? Clear these answers before the next person starts.</p>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="newBtn">Start a new assessment</button>
+      </div>`;
+  } else {
+    el.innerHTML = `
+      <div class="tick warn">!</div>
+      <h2>The send did not go through</h2>
+      <p>Your answers are still here. Use either option below and nothing is lost.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="${mailtoLink()}">Open in your email app</a>
+        <button type="button" class="btn btn-dark" id="dlBtn">Download a copy</button>
+        <button type="button" class="btn btn-ghost" id="retryBtn">Try sending again</button>
+      </div>`;
+  }
+  const dl = $('dlBtn'); if(dl) dl.addEventListener('click', downloadCopy);
+  const pr = $('printBtn'); if(pr) pr.addEventListener('click', ()=>window.print());
+  const nb = $('newBtn'); if(nb) nb.addEventListener('click', resetAll);
+  const rt = $('retryBtn'); if(rt) rt.addEventListener('click', ()=>{
+    el.classList.remove('show'); $('formArea').style.display='';
+    step = SECTIONS.length; $('nextBtn').disabled=false; renderStep();
+    submitForm();
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------------- reset ---------------- */
+function resetAll(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  const el = $('status');
+  el.classList.remove('show');
+  el.innerHTML = '';
+  $('formArea').style.display='';
+  $('nextBtn').disabled = false;
+  step = 0;
+  renderStep();
+}
+
+/* ---------------- navigation ---------------- */
+function go(i){ step = Math.max(0, Math.min(SECTIONS.length, i)); renderStep(); }
+
+$('nextBtn').addEventListener('click', ()=>{
+  if(step === SECTIONS.length){ submitForm(); return; }
+  if(!validate()) return;
+  go(step+1);
+});
+$('backBtn').addEventListener('click', ()=> go(step-1));
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && e.target.tagName!=='TEXTAREA' && e.target.tagName!=='BUTTON' && e.target.tagName!=='A'){
+    e.preventDefault(); $('nextBtn').click();
+  }
+});
+
+buildRail();
+renderStep();
+</script>
+</body>
+</html>
